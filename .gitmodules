@@ -1,0 +1,3 @@
+[submodule "angular-test"]
+	path = angular-test
+	url = git@github.com:chimanyans/angular-test.git

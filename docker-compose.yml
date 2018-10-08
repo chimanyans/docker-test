@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+
+  php_b:
+
+  anguar_app:
+    build:
+      context: ./angular-test
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "4200:4200"
+      # port for live reloading
+      - "49153:49153"
+        # - target: 4200
+        #   published: 4200
+        #   protocol: tcp
+        #   mode: host
+    # expose:
+        # - "4200"
+    volumes:
+      - ./angular-tset:/usr/src/app/
+    networks:
+      - webnet
+    # command: "ng serve --host 127.0.0.1 "
+    # command: "ng serve --host 0.0.0.0"
+    # command: "npm run start"
+
+networks:
+  webnet:
