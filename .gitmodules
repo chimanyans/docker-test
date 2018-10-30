@@ -1,3 +1,6 @@
 [submodule "angular-test"]
 	path = angular-test
 	url = git@github.com:chimanyans/angular-test.git
+[submodule "node-test"]
+	path = node-test
+	url = git@github.com:chimanyans/node-test.git

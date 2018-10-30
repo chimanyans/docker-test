@@ -2,36 +2,39 @@ version: "3"
 
 services:
 
-  php_b:
+  git_test:
+    build:
+      context: ./git_test
+    volumes:
+      - ~/.ssh:/ssh
+      # - type: bind
+      #   source: '~/.ssh'
+      #   target: '/ssh'
 
-  anguar_app:
+  node_tset:
+    build:
+      context: ./node-test
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./node-test:/user/src/app/
+    networks:
+      - publick_net
+
+  anguar_test:
     build:
       context: ./angular-test
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 50M
-      restart_policy:
-        condition: on-failure
+      args:
+        API_URL:  "http://localhost:3000/"
     ports:
-      - "4200:4200"
-      # port for live reloading
-      - "49153:49153"
-        # - target: 4200
-        #   published: 4200
-        #   protocol: tcp
-        #   mode: host
-    # expose:
-        # - "4200"
+        - "4200:4200"
+        - "49153:49153"
     volumes:
-      - ./angular-tset:/usr/src/app/
+      - ./angular-test:/app/
     networks:
-      - webnet
-    # command: "ng serve --host 127.0.0.1 "
-    # command: "ng serve --host 0.0.0.0"
-    # command: "npm run start"
+      - publick_net
 
 networks:
-  webnet:
+  publick_net:
+    driver: bridge
+  # webnet:
